@@ -19,7 +19,7 @@ public class Pet {
     @Nationalized
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
     private LocalDate birthDate;
