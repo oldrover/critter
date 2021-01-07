@@ -7,19 +7,20 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-@Entity
+//@Entity
 public class Schedule {
 
     @Id
     @GeneratedValue
     private long id;
 
-    private List<Long> employeeIds;
+    private List<Employee> employees;
 
-    private List<Long> petIds;
+    private List<Pet> pets;
 
     private LocalDate date;
     
-    @Enumerated(EnumType.STRING)
+    @Column
+    @ElementCollection(targetClass = EmployeeSkill.class)
     private Set<EmployeeSkill> activities;
 }
