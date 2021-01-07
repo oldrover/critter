@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,5 +28,9 @@ public class PetService {
         }else {
             throw new PetNotFoundException();
         }
+    }
+
+    public List<Pet> getAllPets () {
+        return petRepository.findAll();
     }
 }

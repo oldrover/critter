@@ -6,6 +6,7 @@ import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +36,9 @@ public class PetController {
 
     @GetMapping
     public List<PetDTO> getPets(){
-        throw new UnsupportedOperationException();
+        List<PetDTO> pets = new ArrayList<>();
+        petService.getAllPets().forEach(pet -> pets.add(convertPetToPetDTO(pet)));
+        return pets;
     }
 
     @GetMapping("/owner/{ownerId}")
