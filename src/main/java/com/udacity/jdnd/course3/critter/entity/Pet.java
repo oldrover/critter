@@ -11,7 +11,7 @@ public class Pet {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private PetType type;
@@ -26,11 +26,11 @@ public class Pet {
 
     private String notes;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
