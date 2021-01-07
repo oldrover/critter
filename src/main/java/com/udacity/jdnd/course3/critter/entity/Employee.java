@@ -17,11 +17,12 @@ public class Employee {
     @Nationalized
     private String name;
 
-    @ElementCollection(fetch = FetchType.EAGER, targetClass = EmployeeSkill.class)
+    @Column
+    @ElementCollection(targetClass = EmployeeSkill.class)
     private Set<EmployeeSkill> skills;
 
     @Column
-    @ElementCollection(fetch = FetchType.EAGER, targetClass = DayOfWeek.class)
+    @ElementCollection(targetClass = DayOfWeek.class)
     private Set<DayOfWeek> daysAvailable;
 
     public long getId() {
