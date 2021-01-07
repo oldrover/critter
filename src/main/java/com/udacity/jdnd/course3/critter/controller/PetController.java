@@ -29,7 +29,8 @@ public class PetController {
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        Pet pet = petService.getPetById(petId);
+        return convertPetToPetDTO(pet);
     }
 
     @GetMapping
