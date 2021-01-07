@@ -4,10 +4,13 @@ import com.udacity.jdnd.course3.critter.entity.Customer;
 import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.pet.PetDTO;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
+import com.udacity.jdnd.course3.critter.service.PetNotFoundException;
+import com.udacity.jdnd.course3.critter.service.PetService;
 import com.udacity.jdnd.course3.critter.user.CustomerDTO;
 import com.udacity.jdnd.course3.critter.user.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.user.EmployeeRequestDTO;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
@@ -25,11 +28,12 @@ import java.util.Set;
 @RequestMapping("/user")
 public class UserController {
 
-    private final CustomerService customerService;
+    @Autowired
+    CustomerService customerService;
 
-    public UserController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
+    @Autowired
+    PetService petService;
+
 
 
     @PostMapping("/customer")
@@ -47,7 +51,15 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        throw new UnsupportedOperationException();
+        Pet pet = petService.getPetById(petId);
+        if(pet != null) {
+            Customer customer = customerService.getCustomerByPetId(petId);
+            return convertCustomerToCustomerDTO(customer);
+        } else {
+            throw new PetNotFoundException();
+        }
+
+
     }
 
     @PostMapping("/employee")

@@ -10,7 +10,7 @@ public class Customer {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @Nationalized
     private String name;
@@ -22,11 +22,11 @@ public class Customer {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Pet> pets;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
