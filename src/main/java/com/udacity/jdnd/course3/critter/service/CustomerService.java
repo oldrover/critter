@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -18,6 +19,18 @@ public class CustomerService {
 
     public Customer saveCustomer(Customer customer) {
         return customerRepository.save(customer);
+    }
+
+    public Customer getCustomerById(Long id) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+
+        if(optionalCustomer.isPresent()) {
+            return optionalCustomer.get();
+        }
+        else {
+            throw new CustomerNotFoundException();
+
+        }
     }
 
     public List<Customer> getAllCustomers() {
