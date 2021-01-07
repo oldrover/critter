@@ -3,8 +3,10 @@ package com.udacity.jdnd.course3.critter.controller;
 import com.udacity.jdnd.course3.critter.entity.Customer;
 import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.pet.PetDTO;
+import com.udacity.jdnd.course3.critter.service.CustomerService;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,11 +19,11 @@ import java.util.List;
 @RequestMapping("/pet")
 public class PetController {
 
-    private final PetService petService;
+    @Autowired
+    PetService petService;
 
-    public PetController(PetService petService) {
-        this.petService = petService;
-    }
+    @Autowired
+    CustomerService customerService;
 
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
@@ -44,23 +46,29 @@ public class PetController {
 
     @GetMapping("/owner/{ownerId}")
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
-        throw new UnsupportedOperationException();
+        List<PetDTO> pets = new ArrayList<>();
+        petService.getPetsByOwner(ownerId).forEach(pet -> pets.add(convertPetToPetDTO(pet)));
+        return pets;
     }
 
 
     private PetDTO convertPetToPetDTO(Pet pet) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(pet, petDTO);
-        petDTO.setOwnerId(pet.getCustomer().getId());
+        if(pet.getCustomer() != null){
+            petDTO.setOwnerId(pet.getCustomer().getId());
+        }
+
         return petDTO;
     }
 
     private Pet convertPetDTOToPet(PetDTO petDTO) {
         Pet pet = new Pet();
         BeanUtils.copyProperties(petDTO, pet);
-        Customer customer = new Customer();
-        customer.setId(petDTO.getOwnerId());
-        pet.setCustomer(customer);
+        if(petDTO.getOwnerId() != null) {
+            Customer customer = customerService.getCustomerById(petDTO.getOwnerId());
+            pet.setCustomer(customer);
+        }
         return pet;
     }
 }
