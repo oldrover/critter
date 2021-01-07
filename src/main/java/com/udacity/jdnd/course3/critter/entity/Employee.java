@@ -17,10 +17,11 @@ public class Employee {
     @Nationalized
     private String name;
 
-    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = EmployeeSkill.class)
     private Set<EmployeeSkill> skills;
 
-    @Enumerated(EnumType.STRING)
+    @Column
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = DayOfWeek.class)
     private Set<DayOfWeek> daysAvailable;
 
     public long getId() {
