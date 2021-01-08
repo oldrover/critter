@@ -86,7 +86,10 @@ public class UserController {
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        List<EmployeeDTO> employeeDTOs = new ArrayList<>();
+        List<Employee> employees = employeeService.findEmployeesForService(employeeDTO);
+        employees.forEach(employee -> employeeDTOs.add(convertEmployeeToEmployeeDTO(employee)));
+        return employeeDTOs;
     }
 
     private CustomerDTO convertCustomerToCustomerDTO(Customer customer) {
