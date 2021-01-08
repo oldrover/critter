@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.DayOfWeek;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -26,6 +28,12 @@ public class EmployeeService {
         } else {
             throw new EmployeeNotFoundException();
         }
+    }
+
+    public void setAvailability(Set<DayOfWeek> daysAvailable, Long employeeId) {
+        Employee employee = getEmployeeById(employeeId);
+        employee.setDaysAvailable(daysAvailable);
+        saveEmployee(employee);
 
     }
 }
