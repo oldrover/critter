@@ -96,7 +96,7 @@ public class UserController {
         CustomerDTO customerDTO = new CustomerDTO();
         BeanUtils.copyProperties(customer, customerDTO);
         List<Long> petIds = new ArrayList<>();
-        if(customer.getPets() != null) {
+        if(!customer.getPets().isEmpty()) {
             customer.getPets().forEach(pet -> petIds.add(pet.getId()));
             customerDTO.setPetIds(petIds);
         }
