@@ -92,12 +92,27 @@ public class UserController {
     private CustomerDTO convertCustomerToCustomerDTO(Customer customer) {
         CustomerDTO customerDTO = new CustomerDTO();
         BeanUtils.copyProperties(customer, customerDTO);
+        List<Long> petIds = new ArrayList<>();
+        if(customer.getPets() != null) {
+            customer.getPets().forEach(pet -> petIds.add(pet.getId()));
+            customerDTO.setPetIds(petIds);
+        }
         return customerDTO;
     }
 
     private Customer convertCustomerDTOToCustomer(CustomerDTO customerDTO) {
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDTO, customer);
+
+        if(customerDTO.getPetIds() != null) {
+            List<Pet> pets = new ArrayList<>();
+            customerDTO.getPetIds().forEach(petId -> {
+               pets.add(petService.getPetById(petId));
+            });
+
+            customer.setPets(pets);
+        }
+
         return customer;
     }
 
