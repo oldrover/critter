@@ -35,6 +35,11 @@ public class EmployeeService {
         }
     }
 
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+
+    }
+
     public void setAvailability(Set<DayOfWeek> daysAvailable, Long employeeId) {
         Employee employee = getEmployeeById(employeeId);
         employee.setDaysAvailable(daysAvailable);
@@ -46,9 +51,7 @@ public class EmployeeService {
         DayOfWeek day = employeeRequestDTO.getDate().getDayOfWeek();
         Set<EmployeeSkill> skills = employeeRequestDTO.getSkills();
 
-        List<Employee> allEmployees = employeeRepository.findAll();
-
-        List<Employee> availableEmployees = allEmployees
+        List<Employee> availableEmployees = getAllEmployees()
                 .stream()
                 .filter(employee -> employee.getDaysAvailable().contains(day) && employee.getSkills().containsAll(skills))
                 .collect(Collectors.toList());
