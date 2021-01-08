@@ -7,15 +7,17 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-//@Entity
+@Entity
 public class Schedule {
 
     @Id
     @GeneratedValue
     private long id;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Employee> employees;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Pet> pets;
 
     private LocalDate date;
