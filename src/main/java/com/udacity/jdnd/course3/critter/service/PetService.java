@@ -51,7 +51,7 @@ public class PetService {
         Customer customer = pet.getCustomer();
         List<Pet> petList = customer.getPets();
         if(petList == null) {
-            petList = new ArrayList<Pet>();
+            petList = new ArrayList<>();
         }
         petList.add(pet);
         customer.setPets(petList);
