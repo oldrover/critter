@@ -14,18 +14,11 @@ public class Schedule {
     @GeneratedValue
     private long id;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable
-            (name="schedule_employee",
-            joinColumns = @JoinColumn(name="schedule_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id"))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Employee> employees;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name="schedule_pet",
-            joinColumns = @JoinColumn(name = "schedule_id"),
-            inverseJoinColumns = @JoinColumn(name = "pet_id"))
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Pet> pets;
 
     private LocalDate date;
