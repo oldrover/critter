@@ -49,13 +49,17 @@ public class PetService {
 
     private void addPetToCustomer(Pet pet) {
         Customer customer = pet.getCustomer();
-        List<Pet> petList = customer.getPets();
-        if(petList == null) {
-            petList = new ArrayList<>();
+        if(customer != null) {
+            List<Pet> petList = customer.getPets();
+            if(petList == null) {
+                petList = new ArrayList<>();
+            }
+            petList.add(pet);
+            customer.setPets(petList);
+            customerService.saveCustomer(customer);
+
         }
-        petList.add(pet);
-        customer.setPets(petList);
-        customerService.saveCustomer(customer);
+
 
 
     }
